@@ -144,14 +144,20 @@ def pregunta_05():
     x_train, x_test, y_train, y_test = pregunta_02()
 
     # Obtenga el objeto GridSearchCV
-    estimator = pregunta_04()
+    grid_search_estimator = pregunta_04()
 
-    # Entrene el estimador
-    estimator.fit(x_train, y_train)
+    # Ajuste el modelo con la búsqueda de la cuadrícula
+    grid_search_estimator.fit(x_train, y_train)
 
-    # Pronostique para las muestras de entrenamiento y validacion
-    y_train_pred = estimator.predict(x_train)
-    y_test_pred = estimator.predict(x_test)
+    # Obtenga el mejor estimador después de la búsqueda
+    best_estimator = grid_search_estimator.best_estimator_
+
+    # Entrene el mejor estimador
+    best_estimator.fit(x_train, y_train)
+
+    # Pronostique para las muestras de entrenamiento y validación
+    y_train_pred = best_estimator.predict(x_train)
+    y_test_pred = best_estimator.predict(x_test)
 
     # Calcule el error cuadrático medio de las muestras
     mse_train = mean_squared_error(y_train, y_train_pred)
